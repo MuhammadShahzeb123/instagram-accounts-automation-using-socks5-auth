@@ -1,0 +1,28 @@
+{
+  "name": "instagram-accounts-handling",
+  "version": "1.0.0",
+  "description": "Multi-proxy Instagram automation with Playwright",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "node src/main.js",
+    "install-browsers": "npx playwright install",
+    "test": "node src/test-proxies.js"
+  },
+  "dependencies": {
+    "playwright": "^1.40.0",
+    "playwright-extra": "^4.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0"
+  },
+  "keywords": [
+    "playwright",
+    "proxy",
+    "socks5",
+    "automation",
+    "instagram"
+  ],
+  "author": "",
+  "license": "MIT"
+}

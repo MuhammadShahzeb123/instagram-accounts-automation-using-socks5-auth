@@ -1,7 +1,7 @@
 const { chromium } = require('playwright');
 const ProxyChain = require('proxy-chain');
 
-class PlaywrightProxyManager {
+class ProxyManager {
     constructor() {
         this.proxyServers = new Map(); // Store active proxy servers
         this.browsers = new Map(); // Store active browsers
@@ -241,12 +241,10 @@ class PlaywrightProxyManager {
 
                 const taskResults = await Promise.all(taskPromises);
                 results.push(...taskResults);
-            }
-
-            // Keep browsers open for a bit to see them in action
+            }            // Keep browsers open for a bit to see them in action
             if (!options.closeImmediately) {
-                console.log('⏳ Keeping browsers open for 10 seconds...');
-                await new Promise(resolve => setTimeout(resolve, 10000));
+                console.log('⏳ Keeping browsers open for 100 seconds...');
+                await new Promise(resolve => setTimeout(resolve, 100000));
             }
 
             return { launchResults, ipResults, taskResults: results };
@@ -261,44 +259,4 @@ class PlaywrightProxyManager {
     }
 }
 
-module.exports = PlaywrightProxyManager;
-
-// Example usage and testing
-async function main() {
-    const manager = new PlaywrightProxyManager();
-    
-    // Your proxy
-    const testProxy = 'socks5:134.195.152.111:9234:P1yUB7:N1ZT9F';
-    
-    try {
-        console.log('🧪 Testing single browser with proxy...');
-        
-        // Test single browser
-        const { browser, browserId } = await manager.launchBrowserWithProxy(testProxy, 'test_browser');
-        
-        // Test IP
-        const ip = await manager.testBrowserIP(browser, browserId);
-        console.log(`✅ Proxy working! Your IP: ${ip}`);
-        
-        // Run a simple automation task
-        await manager.runAutomationTask(browser, browserId, async (page, id) => {
-            console.log(`🌐 Navigating to Google with browser ${id}...`);
-            await page.goto('https://www.google.com', { waitUntil: 'networkidle' });
-            await page.waitForTimeout(3000);
-            
-            const title = await page.title();
-            console.log(`📄 Page title: ${title}`);
-        });
-        
-        await manager.closeAll();
-        
-    } catch (error) {
-        console.error('❌ Test failed:', error.message);
-        await manager.closeAll();
-    }
-}
-
-// Run if this file is executed directly
-if (require.main === module) {
-    main().catch(console.error);
-}
+module.exports = ProxyManager;

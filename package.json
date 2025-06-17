@@ -5,8 +5,10 @@
   "main": "src/main.js",  "scripts": {
     "start": "node src/main.js",
     "install-browsers": "npx playwright install",
-    "test-proxy": "node src/test-proxy-chain.js",
-    "test-instagram": "node src/instagram-automation.js"
+    "bot": "node src/main.js",
+    "cookies": "node src/cookie-utils.js",
+    "cookies:list": "node src/cookie-utils.js list",
+    "cookies:clean": "node src/cookie-utils.js clean"
   },
   "dependencies": {
     "playwright": "^1.40.0",

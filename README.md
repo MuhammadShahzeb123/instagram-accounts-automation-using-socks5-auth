@@ -30,7 +30,30 @@ Example: `134.195.152.111:9234:P1yUB7:N1ZT9F`
 
 ## Usage
 
-### 1. Basic Testing
+### 1. Upload Mode (NEW!)
+
+Spawn browsers with a specific number of accounts for manual use:
+
+```bash
+# Use 1 account
+npm run upload 1
+
+# Use 3 accounts
+npm run upload 3
+
+# Use all 5 accounts
+npm run upload 5
+```
+
+**What Upload Mode Does:**
+- ✅ Spawns browsers with proxies configured
+- ✅ Loads saved cookies automatically
+- ✅ Logs in if cookies are available
+- ✅ Keeps browsers open for manual use
+- ✅ Saves cookies when you press Ctrl+C
+- ✅ Perfect for manual Instagram management
+
+### 2. Basic Testing
 
 Test a single proxy:
 ```bash
@@ -42,7 +65,7 @@ Test multiple proxies:
 npm test multiple
 ```
 
-### 2. Main Script
+### 3. Main Script
 
 Run the main automation script:
 ```bash
@@ -56,18 +79,18 @@ Edit the `exampleAutomationTask` function in `src/main.js` to customize your aut
 ```javascript
 async function exampleAutomationTask(page, context, taskId) {
     // Your custom automation logic here
-    
+
     // Example: Instagram login
     await page.goto('https://www.instagram.com/');
     await page.fill('input[name="username"]', 'your_username');
     await page.fill('input[name="password"]', 'your_password');
     await page.click('button[type="submit"]');
-    
+
     // Add cookies for session persistence
     await context.addCookies([
         { name: 'sessionid', value: 'session_value', domain: '.instagram.com', path: '/' }
     ]);
-    
+
     return { status: 'success' };
 }
 ```
@@ -93,7 +116,7 @@ Adjust the number of concurrent sessions in the options:
 
 ```javascript
 const results = await proxyManager.runMultipleProxies(
-    workingProxies, 
+    workingProxies,
     exampleAutomationTask,
     { maxConcurrent: 5 } // Adjust based on your system capacity
 );
@@ -130,12 +153,12 @@ async function instagramLogin(page, context, taskId) {
 async function likePosts(page, context, taskId) {
     await page.goto('https://www.instagram.com/explore/');
     const likeButtons = await page.$$('button[aria-label="Like"]');
-    
+
     for (let i = 0; i < Math.min(5, likeButtons.length); i++) {
         await likeButtons[i].click();
         await page.waitForTimeout(2000); // Delay between actions
     }
-    
+
     return { likesGiven: Math.min(5, likeButtons.length) };
 }
 ```

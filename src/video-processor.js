@@ -2,7 +2,7 @@ const ffmpeg = require('fluent-ffmpeg');
 const path = require('path');
 const fs = require('fs').promises;
 
-class VideoProcessor {
+class VideoProcessor2 {
     constructor() {
         this.videosDir = path.join(__dirname, '..', 'videos');
         this.soundDir = path.join(__dirname, '..', 'sound');
@@ -303,4 +303,4 @@ class VideoProcessor {
     }
 }
 
-module.exports = VideoProcessor;
+module.exports = VideoProcessor2;

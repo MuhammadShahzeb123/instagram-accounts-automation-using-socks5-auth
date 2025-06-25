@@ -146,7 +146,7 @@ class StreamingDiagnostics {
         const context = await this.streamingManager.createStreamingContext(browser);
         const page = await context.newPage();
 
-        const testResults = {
+        const testR = {
             canPlay: false,
             formats: {},
             errors: []
@@ -211,18 +211,18 @@ class StreamingDiagnostics {
                 }
             });
 
-            testResults.formats = results;
-            testResults.canPlay = Object.values(results).some(canPlay => canPlay);
+            testR.formats = results;
+            testR.canPlay = Object.values(results).some(canPlay => canPlay);
 
             console.log('    📊 Media playback results:', results);
 
         } catch (error) {
-            testResults.errors.push(error.message);
+            testR.errors.push(error.message);
             console.log('    ❌ Media playback test failed:', error.message);
         }
 
         await context.close();
-        return testResults;
+        return testR;
     }
 
     /**

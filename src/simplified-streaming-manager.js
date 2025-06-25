@@ -17,6 +17,7 @@ class SimplifiedStreamingManager {
     /**
      * Parse SOCKS5 proxy string format: socks5:IP:PORT:USER:PASS
      */
+    // Improved parsing with validation
     parseProxyString(proxyString) {
         const parts = proxyString.split(':');
         if (parts.length !== 5 || parts[0] !== 'socks5') {

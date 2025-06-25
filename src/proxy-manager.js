@@ -15,7 +15,7 @@ class ProxyManager {
         if (parts.length !== 5 || parts[0] !== 'socks5') {
             throw new Error('Invalid proxy format. Expected: socks5:IP:PORT:USER:PASS');
         }
-        
+
         return {
             protocol: 'socks5',
             hostname: parts[1],
@@ -31,13 +31,13 @@ class ProxyManager {
     async createProxyServer(proxyString, proxyId = 'default') {
         try {
             const proxyConfig = this.parseProxyString(proxyString);
-            
+
             // Create the SOCKS5 URL with authentication
             const socksUrl = `socks5://${proxyConfig.username}:${proxyConfig.password}@${proxyConfig.hostname}:${proxyConfig.port}`;
-            
+
             console.log(`Creating proxy server for: ${proxyConfig.hostname}:${proxyConfig.port}`);            // Create local HTTP proxy server that forwards to SOCKS5
             const proxyUrl = await ProxyChain.anonymizeProxy(socksUrl);
-            
+
             this.proxyServers.set(proxyId, {
                 url: proxyUrl,
                 originalProxy: proxyString
@@ -55,10 +55,10 @@ class ProxyManager {
     async launchBrowserWithProxy(proxyString, browserId = null, options = {}) {
         try {
             const id = browserId || `browser_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-            
+
             // Create proxy server for this browser
             const localProxyUrl = await this.createProxyServer(proxyString, id);
-            
+
             // Launch browser with the local proxy
             const browser = await chromium.launch({
                 headless: options.headless || false,
@@ -75,7 +75,7 @@ class ProxyManager {
             });
 
             this.browsers.set(id, browser);
-            
+
             console.log(`🚀 Browser launched with ID: ${id}`);
             return { browser, browserId: id };
         } catch (error) {
@@ -91,18 +91,18 @@ class ProxyManager {
                 userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
             });
             const page = await context.newPage();
-            
+
             console.log(`🔍 Testing IP for browser ${browserId}...`);
-            
+
             // Navigate to IP checking service
             await page.goto('https://httpbin.org/ip', { waitUntil: 'networkidle' });
-            
+
             // Get the IP from the response
             const content = await page.textContent('body');
             const ipData = JSON.parse(content);
-            
+
             console.log(`📍 Browser ${browserId} IP: ${ipData.origin}`);
-            
+
             await context.close();
             return ipData.origin;
         } catch (error) {
@@ -115,12 +115,12 @@ class ProxyManager {
     async runAutomationTask(browser, browserId, task) {
         try {
             console.log(`🤖 Running automation task for browser ${browserId}...`);
-            
+
             const context = await browser.newContext({
                 userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
             });
             const page = await context.newPage();
-            
+
             // Execute the custom task function
             if (typeof task === 'function') {
                 await task(page, browserId);
@@ -130,7 +130,7 @@ class ProxyManager {
                 await page.waitForTimeout(2000);
                 console.log(`✅ Browser ${browserId} completed default navigation task`);
             }
-            
+
             await context.close();
         } catch (error) {
             console.error(`❌ Automation task failed for browser ${browserId}:`, error.message);
@@ -166,7 +166,7 @@ class ProxyManager {
      */
     async closeAll() {
         console.log('🧹 Cleaning up all browsers and proxy servers...');
-        
+
         // Close all browsers
         for (const [id, browser] of this.browsers) {
             try {
@@ -187,7 +187,7 @@ class ProxyManager {
                 console.error(`❌ Failed to close proxy server ${id}:`, error.message);
             }
         }
-        
+
         this.browsers.clear();
         this.proxyServers.clear();
         console.log('✅ Cleanup completed');
@@ -202,7 +202,7 @@ class ProxyManager {
 
         try {
             console.log(`🚀 Launching ${proxies.length} browsers with different proxies...`);
-            
+
             // Launch all browsers simultaneously
             const launchPromises = proxies.map(async (proxy, index) => {
                 const browserId = `browser_${index + 1}`;
@@ -217,8 +217,9 @@ class ProxyManager {
             });
 
             const launchResults = await Promise.all(launchPromises);
-            
+
             // Test IPs for all successful browsers
+            // Can be removed later
             const ipTestPromises = launchResults
                 .filter(result => result.success)
                 .map(async ({ browser, browserId }) => {
@@ -227,7 +228,7 @@ class ProxyManager {
                 });
 
             const ipResults = await Promise.all(ipTestPromises);
-            
+
             // Run automation tasks for all browsers
             if (automationTask) {
                 const taskPromises = browsers.map(async ({ browser, browserId }) => {
@@ -248,7 +249,7 @@ class ProxyManager {
             }
 
             return { launchResults, ipResults, taskResults: results };
-            
+
         } catch (error) {
             console.error('❌ Error in runMultipleBrowsers:', error.message);
             throw error;

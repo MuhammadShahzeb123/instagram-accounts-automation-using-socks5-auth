@@ -30,7 +30,7 @@ class SocksToHttpProxy {
 
             // Handle HTTP requests
             this.server.on('request', (req, res) => {
-                this.handleHttpRequest(req, res);
+                this.handleHttpRequestImroved(req, res);
             });
 
             // Handle HTTPS CONNECT requests
@@ -60,7 +60,7 @@ class SocksToHttpProxy {
     /**
      * Handle HTTP requests (non-HTTPS)
      */
-    async handleHttpRequest(clientReq, clientRes) {
+    async handleHttpRequestImroved(clientReq, clientRes) {
         try {
             const targetUrl = new URL(clientReq.url);
             const hostname = targetUrl.hostname;

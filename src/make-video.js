@@ -16,7 +16,7 @@ async function main() {
             console.log('Usage: npm run make_video <index>');
             console.log('Example: npm run make_video 1');
             console.log('');
-            console.log('Available video indices: 1, 2, 3, 4, 5');
+            console.log('Available video indices: 1, 2, 3, 4, 5, 6');
             process.exit(1);
         }
 

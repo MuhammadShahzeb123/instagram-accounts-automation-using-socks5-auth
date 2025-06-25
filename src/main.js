@@ -34,14 +34,14 @@ async function main() {
                 username: 'aerorizzz',
                 password: 'ISP2025$'
             }
-        },
-        {
-            proxy: 'socks5:38.153.31.217:9794:P1yUB7:N1ZT9F',
-            account: {
-                username: 'miragelines',
-                password: 'ISP2025$'
-            }
         }
+        // {
+        //     proxy: 'socks5:38.153.31.217:9794:P1yUB7:N1ZT9F',
+        //     account: {
+        //         username: 'miragelines',
+        //         password: 'ISP2025$'
+        //     }
+        // }
         // Add more proxy/account pairs here:
         // {
         //     proxy: 'socks5:another.proxy.ip:port:user:pass',

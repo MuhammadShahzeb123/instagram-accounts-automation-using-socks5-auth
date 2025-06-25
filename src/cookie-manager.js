@@ -156,6 +156,7 @@ class CookieManager {
     /**
      * Delete cookies for a user
      */
+    // important
     async deleteCookies(username) {
         try {
             const cookieFilePath = this.getCookieFilePath(username);

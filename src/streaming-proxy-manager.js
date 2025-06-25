@@ -268,7 +268,7 @@ class StreamingProxyManager {
             }
 
             try {
-                // Test actual streaming with a simple video
+                // Test actual streaming with a simple video but didn't work before
                 await page.goto('https://www.w3schools.com/html/mov_bbb.mp4', { waitUntil: 'domcontentloaded', timeout: 30000 });
                 await page.waitForTimeout(5000);
                 testResults.streamingSupport = true;

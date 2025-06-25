@@ -71,7 +71,7 @@ class EnhancedStreamingManager {
     /**
      * Launch browser optimized for streaming with the HTTP proxy
      */
-    async launchStreamingBrowser(options = {}) {
+    async launchStreamingBrowserImproved(options = {}) {
         if (!this.isInitialized) {
             throw new Error('Enhanced streaming manager not initialized');
         }
@@ -342,7 +342,7 @@ class EnhancedStreamingManager {
                 throw new Error('Manager not initialized');
             }
 
-            const browser = await this.launchStreamingBrowser(options);
+            const browser = await this.launchStreamingBrowserImproved(options);
             const { page, context } = await this.createStreamingPage();
 
             // Run streaming test

@@ -11,7 +11,7 @@ const net = require('net');
  * - Media/video traffic goes through HTTP proxy for better streaming support
  * - Uses request interception to route traffic appropriately
  */
-class HybridProxyManager {
+class HybridProxyManagerImproved {
     constructor() {
         this.socksProxyUrl = null;
         this.httpProxyUrl = null;
@@ -412,4 +412,4 @@ class HybridProxyManager {
     }
 }
 
-module.exports = HybridProxyManager;
+module.exports = HybridProxyManagerImproved;

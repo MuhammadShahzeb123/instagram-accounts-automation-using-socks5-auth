@@ -3,15 +3,15 @@ const CookieManager = require('./cookie-manager');
 async function manageCookies() {
     const action = process.argv[2];
     const username = process.argv[3];
-    
+
     const cookieManager = new CookieManager();
-    
+
     switch (action) {
         case 'list':
             console.log('📋 Listing all saved cookies:');
             await cookieManager.listSavedCookies();
             break;
-            
+
         case 'delete':
             if (!username) {
                 console.log('❌ Please provide username: node src/cookie-utils.js delete <username>');
@@ -20,7 +20,7 @@ async function manageCookies() {
             console.log(`🗑️ Deleting cookies for: ${username}`);
             await cookieManager.deleteCookies(username);
             break;
-            
+
         case 'clean':
             console.log('🧹 Cleaning all saved cookies...');
             const users = await cookieManager.listSavedCookies();
@@ -29,7 +29,7 @@ async function manageCookies() {
             }
             console.log('✅ All cookies cleaned');
             break;
-            
+        // Can you do the default one?
         default:
             console.log('📖 Cookie Management Utility');
             console.log('');

@@ -9,6 +9,7 @@ const dns = require('dns');
  * DNS-Aware SOCKS5 to HTTP Proxy Converter
  * Handles DNS resolution through the SOCKS5 proxy for streaming media compatibility
  */
+// Thanks!
 class DNSAwareProxy {
     constructor(socksConfig) {
         this.socksConfig = socksConfig;

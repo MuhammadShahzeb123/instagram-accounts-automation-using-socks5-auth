@@ -6,7 +6,7 @@ const EnhancedStreamingManager = require('./enhanced-streaming-manager');
 const StreamingDiagnostics = require('./streaming-diagnostics');
 const CookieManager = require('./cookie-manager');
 
-class UploadManager {    constructor() {
+class UploadManager2 {    constructor() {
         this.proxyManager = new ProxyManager();
         this.streamingManager = new StreamingProxyManager();
         this.hybridManager = new HybridProxyManager();
@@ -485,7 +485,7 @@ async function main() {
 
     if (!isNaN(firstArgAsNumber) && firstArgAsNumber > 0) {
         // Old style: npm run upload 1
-        const uploadManager = new UploadManager();
+        const uploadManager = new UploadManager2();
         await uploadManager.spawnBrowser(firstArgAsNumber);
         return;
     }
@@ -494,7 +494,7 @@ async function main() {
     const command = args[0];
     const accountIndex = parseInt(args[1]);
 
-    const uploadManager = new UploadManager();
+    const uploadManager = new UploadManager2();
 
     // Handle different commands
     if (command === 'test' && !isNaN(accountIndex)) {
@@ -560,4 +560,4 @@ if (require.main === module) {
     main().catch(console.error);
 }
 
-module.exports = UploadManager;
+module.exports = UploadManager2;

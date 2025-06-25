@@ -109,7 +109,7 @@ class InstagramBot {
                 await page.goto('https://www.instagram.com/', {
                     timeout: 30000
                 });
-                await page.waitForTimeout(3000);
+                await page.waitForTimeout(2000);
 
                 // Check if we're logged in by looking for "Don't have an account?" text
                 const isLoggedIn = await this.cookieManager.checkLoginStatus(page, account.username);
